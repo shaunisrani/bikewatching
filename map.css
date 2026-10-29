@@ -1,0 +1,108 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Step 5.1: title on the left, slider pushed to the right */
+header {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+
+  h1 {
+    margin: 0.3em 0;
+  }
+
+  label {
+    margin-left: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    flex-wrap: wrap;
+  }
+
+  /* time and "(any time)" sit on their own line so the slider never jumps */
+  time,
+  em {
+    display: block;
+    min-width: 5.5em;
+    text-align: right;
+  }
+
+  em {
+    color: #888;
+    font-style: italic;
+  }
+}
+
+.intro {
+  margin: 0 0 0.75em;
+  color: #555;
+}
+
+#map {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 60vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Step 3.2: SVG overlay on top of the map, letting drags through to the map */
+#map svg {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Step 6: shared flow colors for the circles and the legend */
+#map circle,
+.legend > div {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
+
+#map circle {
+  fill: var(--color);
+  fill-opacity: 0.6;
+  stroke: white;
+  stroke-width: 1;
+  pointer-events: auto; /* so the <title> tooltips show */
+}
+
+/* Step 6.2: legend, design 1 (blocks) */
+.legend {
+  display: flex;
+  gap: 1px;
+  margin-block: 1em;
+
+  > div {
+    flex: 1;
+    padding: 0.4em 1.5em;
+    background: var(--color);
+    color: white;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  > div:first-child {
+    text-align: left;
+    border-radius: 6px 0 0 6px;
+  }
+
+  > div:last-child {
+    text-align: right;
+    border-radius: 0 6px 6px 0;
+    color: #222;
+  }
+}
